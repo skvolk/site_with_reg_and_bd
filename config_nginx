@@ -1,0 +1,39 @@
+server {
+
+       server_name ishutin.akulon.codenoobs.ru;
+
+       root /var/www/ishutin;
+       index index.html;
+
+       location /  {
+               try_files $uri $uri/ =404;
+       }
+       location /api {
+           proxy_pass https://127.0.0.1:7676/;
+       }
+
+
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/ishutin.akulon.codenoobs.ru/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/ishutin.akulon.codenoobs.ru/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+server {
+    if ($host = ishutin.akulon.codenoobs.ru) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+
+       server_name ishutin.akulon.codenoobs.ru;
+
+       listen 80;
+    return 404; # managed by Certbot
+
+
+}
+~
