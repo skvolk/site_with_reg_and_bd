@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal account</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .btn {
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="row">
+        <div>Логин:</div>
+        <b><div id="login"></div></b>
+    </div>
+    <div class="row">
+        <div>Пароль:</div>
+        <b><div id="password"></div></b>
+    </div>
+    <div class="row">
+        <div>Дата регистрации:</div>
+        <b><div id="reg_date"></div></b>
+    </div>
+<script src="script.js"></script>
+<script>
+    fetch(`${Settings.host}/${URLParams['login']}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        }
+    }).then(r => r.json()).then(r => {
+        console.log(r)
+        if (r.result === undefined) {
+            console.log(document.getElementById('login').value)
+            document.getElementById('login')   .innerText = r.login
+            document.getElementById('password').innerText = r.password
+            document.getElementById('reg_date').innerText = r.registration_date
+        } else {
+            document.getElementById('login').value = 'Неизвестный пользователь'
+        }
+        // resolve(r)
+    }).catch(error => {
+        // reject(error)
+
+    });
+</script>
+</body>
+</html>
